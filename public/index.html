@@ -5,26 +5,21 @@
   <title>จองคิวคุณครู</title>
   <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- ── เมนูขวาบน ───────────────────────────────────── -->
   <nav style="text-align:right; margin:0.5rem 0;">
     <a href="teacher-login.html">เข้าสู่ระบบครู</a>
   </nav>
 
   <h1 style="margin-top:0">จองคิวคุณครู</h1>
 
-  <!-- เลือกครู -->
   <label>เลือกครู:
     <select id="teacherSelect"></select>
   </label>
 
-  <!-- ปฏิทิน -->
   <div id="calendar" style="margin-top:1rem"></div>
 
-  <!-- ── Dialog จอง ─────────────────────────────────── -->
   <dialog id="bookingDialog">
     <form id="bookingForm" method="dialog">
       <h3>จองเวลา</h3>
@@ -50,7 +45,6 @@
     </form>
   </dialog>
 
-  <!-- สคริปต์ -->
   <script type="module" src="js/firebase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <script type="module" src="js/student.js"></script>

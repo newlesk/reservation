@@ -46,6 +46,7 @@ const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
     bookingDlg.showModal();
   },
 
+  // ✅ [แก้ไข] ส่วนที่ดึงข้อมูล Event มาแสดงบนปฏิทิน
   events: async fetchInfo => {
     if (!selectedTeacherId) return [];
     const q = query(
@@ -58,14 +59,30 @@ const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
     return snap.docs.map(d => {
       const data = d.data();
       const [st, et] = data.slot.split('-');
+      
+      // กำหนด title และ color ตาม status
+      let title = 'รออนุมัติ';
+      let color = '#f77f00'; // สีส้มสำหรับ pending
+
+      if (data.status === 'approved') {
+        title = `จองโดย: ${data.studentName}`; // แสดงชื่อผู้จองเมื่ออนุมัติแล้ว
+        color = '#38b000'; // สีเขียว
+      } else if (data.status === 'rejected') {
+        title = 'การจองถูกปฏิเสธ';
+        color = '#ccc'; // สีเทา
+      }
+
       return {
         id: d.id,
-        title: data.status === 'approved' ? data.studentName : 'รออนุมัติ',
+        title: title,
         start: `${data.date}T${st}`,
         end:   `${data.date}T${et}`,
-        color: data.status === 'rejected' ? '#ccc'
-             : data.status === 'approved' ? '#38b000'
-             : '#f77f00'
+        color: color,
+        extendedProps: { // เก็บข้อมูลเพิ่มเติมเผื่อใช้ในอนาคต
+          status: data.status,
+          studentName: data.studentName,
+          notes: data.notes
+        }
       };
     });
   }
